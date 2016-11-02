@@ -8,6 +8,11 @@
     mc:Ignorable="d">
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button Click="Launch" Content="Launch App"/>
+        <Button Click="Launch" Content="Launch App" Name="bt"/>
+        <Button Click="InProcessBackground" Content="In Process Background"/>
+        <Button Click="OutProcessBackground" Content="Out Progress Background"/>
+        <Button Click="Cancell" Content="cancel"/>
+        <Button Click="Tile" Content="Tile"/>
+        <TextBlock Text="progress" Name="MyTextBlock"/>
     </StackPanel>
 </Page>

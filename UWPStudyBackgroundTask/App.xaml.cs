@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -14,13 +15,16 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Threading;
+using Windows.ApplicationModel.Background;
+using System.Diagnostics;
 
 namespace UWPStudyBackgroundTask
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : Application
+    sealed partial class App : Application,IBackgroundTask
     {
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -31,6 +35,27 @@ namespace UWPStudyBackgroundTask
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
+
+        public void Run(IBackgroundTaskInstance taskInstance)
+        {
+        }
+
+        protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+        {
+            base.OnBackgroundActivated(args);
+            if(args.TaskInstance.Task.Name!= "ExampleBackgroundTask")
+            {
+                return;
+            }
+            Debug.WriteLine("in process");
+            args.TaskInstance.Canceled +=new BackgroundTaskCanceledEventHandler(OnCancelled);
+        }
+
+        private void OnCancelled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
+        {
+            Debug.WriteLine("cancel");
+        }
+
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
