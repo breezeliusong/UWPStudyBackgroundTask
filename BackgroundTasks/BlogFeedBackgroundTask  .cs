@@ -42,6 +42,7 @@ namespace BackgroundTasks
 
                 // Download the feed.
                 feed = await client.RetrieveFeedAsync(new Uri(feedUrl));
+                
             }
             catch (Exception ex)
             {
@@ -64,7 +65,7 @@ namespace BackgroundTasks
             // Create a tile notification for each feed item.
             foreach (var item in feed.Items)
             {
-                XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150Text01);
+                XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150IconWithBadgeAndText);
 
                 var title = item.Title;
                 string titleText = title.Text == null ? String.Empty : title.Text;
